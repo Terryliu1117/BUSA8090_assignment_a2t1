@@ -1,0 +1,30 @@
+Question 1.
+a.awk -F' ' '{if($2<1000)print$2}' <expression_output.tab
+
+b. awk -F'[*...]' '/ase/{print $(NF-1)}' annotation_output.tab
+
+c. egrep '(Purine|Pyrimidine)' annotation_output.tab
+
+
+Question 2.
+a. step1：scp -i busa8090_s1_2020_46179038.pem world_x.sql ubuntu@ec2-54-66-172-228.ap-southeast-2.compute.amazonaws.com:~/
+   step2: sudo mysql
+   step3: mysql> GRANT ALL ON world_x.* TO BUSA8090_a2t1@localhost IDENTIFIED BY “password”;
+   step4: mysql -u BUSA8090_a2t1 -p
+   step5: mysql> create database world_x;
+   step6: mysql> use world_x;
+   step7: mysql> source world_x.sql;
+
+b. mysql> select c.Name, ci.Name, cl.Percentage from country c, countrylanguage cl,city ci where c.Code = cl.CountryCode and c.Capital = ci.ID and cl.Language = "English" and cl.Percentage > 50;
+
+
+Question 3.
+library(ggplot2)
+
+data <- data.frame(country <- c("Belgium", "Spain", "Italy", "France", "Sweden", "Germany", "Australia"), number <- c(59,48,43,35,21,7,0.33))
+
+data_plot <- ggplot(data, aes(x=reorder(country, +number), y=number))+
+              geom_bar(stat="identity", fill="steelblue4", width=0.7)+
+              coord_flip()
+
+print(data_plot + labs(title= "Covid-19 deaths per 100,000 population", y="numbers", x="country"))
